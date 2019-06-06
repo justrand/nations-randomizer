@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NationViewComponent} from './nation-view/nation-view.component';
 import {NationService} from './nation.service';
 import {Nation} from './nation';
-
+import {FormBuilder, FormGroup} from '@angular/forms';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,16 +10,28 @@ import {Nation} from './nation';
 })
 export class AppComponent {
   title = 'nations-randomizer';
-
-  constructor(private characterService: NationService) { }
+  options: FormGroup;
+  
+  constructor(private nationsService: NationService, fb: FormBuilder) { 
+    this.options = fb.group({
+      hideRequired: false,
+      floatLabel: 'auto',
+    });
+  }
   
   nations: Nation[];
+  allNations: Nation[];
   players: number;
 
   ngOnInit() {
-    //this.characterService.getAllNations().subscribe(nations => this.nations = nations);
+    //this.nationsService.getAllNations().subscribe(nations => this.nations = nations);
   }
+
   getNations(): void {
-    this.characterService.getRandomNations(this.players).subscribe(nations => this.nations = nations);
+    this.nationsService.getRandomNations(this.players).subscribe(nations => this.nations = nations);
+  }
+
+  getAllNations(): void {
+    this.nationsService.getAllNations().subscribe(allNations => this.allNations = allNations);
   }
 }

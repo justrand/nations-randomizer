@@ -1,11 +1,20 @@
-<div class="app-container">
-  <div class="row">
+<mat-toolbar mat-elevation-z24 color="primary" >
+    <h1>Nations randomizer</h1>
+</mat-toolbar>
+
+<div fxLayout="row" fxLayoutAlign="center">
+  <div>
+    <p>Randomizes nations based on player count. Note that you can give an amount greater than possible players.</p>
     
-      <input type="number" name="players" [(ngModel)]="players" placeholder="Players">
-      <button id="submit" (click)="getNations()" >Get nations</button>
+    <mat-form-field class="control__players" [floatLabel]="options.value.floatLabel">
+      <mat-label>Players</mat-label>
+      <input matInput type="number" name="players" [(ngModel)]="players">
+    </mat-form-field>
+    <button mat-flat-button color="primary" id="submit" (click)="getNations()" >Get nations</button>
     
+      
+      <button mat-flat-button color="secondary"><i class="material-icons">list</i></button>
+      <app-nation-view *ngFor="let nation of nations" [nation]='nation' fxLayout="row" fxLayoutAlign="space-evenly"></app-nation-view>
   </div>
-  <ul>
-    <li *ngFor="let nation of nations">{{nation.name}}</li>
-  </ul>
+  
 </div>

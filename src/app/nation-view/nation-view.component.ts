@@ -17,4 +17,5 @@ export class NationViewComponent implements OnInit {
   ngOnInit() {
   }
 
+  
 }

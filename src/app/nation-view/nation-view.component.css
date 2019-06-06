@@ -1,0 +1,10 @@
+.nation-view {
+    padding: 10px;
+    font-size: 1.4em;
+    margin: 5px 0;
+    max-width: 200px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #ccccff;
+    background-image: linear-gradient(#dcdcf9, #eef0fd, #f0f6ff);
+}
