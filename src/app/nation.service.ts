@@ -2,18 +2,21 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import {Nation} from './nation';
-import {NATIONS} from './nations-data';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NationService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { 
+    this.getAllNations().subscribe(allNations => this.nations = allNations);
+  }
 
-  
+  nations: Nation[];
   getAllNations(): Observable<Nation[]> {
-    return of(NATIONS);
+    return this.http.get<Nation[]>('./assets/nations-data.json');
+    //return of(NATIONS);
   }
 
   /**
@@ -21,7 +24,7 @@ export class NationService {
    * @param amount How many random nations to get
    */
   getRandomNations(amount): Observable<Nation[]> {
-    let nations = NATIONS.slice(0);
+    let nations = this.nations.slice(0);
     if(amount > nations.length) {
       amount = nations.length;
     }
@@ -52,7 +55,7 @@ export class NationService {
     if(!soughtExpansion) {
       return of([]);
     }
-    let nations = NATIONS.slice(0);
+    let nations = this.nations.slice(0);
     let result = [];
     for(let i = 0; i < nations.length; i++) {
       if(soughtExpansion === nations[i]['expansion']) result.push(nations[i]);
@@ -65,7 +68,7 @@ export class NationService {
    * @returns Observable<String[]>
    */
   getExpansions(): Observable<String[]> {
-    let nations = NATIONS.slice(0);
+    let nations = this.nations.slice(0);
     let result = [];
     for(let i = 0; i < nations.length; i++) {
       let found = false;
